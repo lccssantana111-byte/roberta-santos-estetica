@@ -1,0 +1,13 @@
+# macOS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+
+# Claude Code
+.claude/
+CLAUDE.md
+
+# Pasta de imagens órfã (não referenciada pelo projeto)
+assets:images/
