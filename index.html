@@ -1480,6 +1480,72 @@
       pointer-events: none;
       z-index: 3;
     }
+
+    /* ─────────────────────────────────────────────
+       MOBILE — ajustes 375px–767px
+    ───────────────────────────────────────────── */
+    @media (max-width: 767px) {
+      /* Nav */
+      .nav-logo-name { font-size: 1.4rem; }
+
+      /* Hero */
+      .hero-content {
+        padding-top: 7rem;
+        padding-bottom: 5rem;
+        max-width: 100%;
+      }
+      .hero-headline { font-size: clamp(2.2rem, 9.5vw, 3rem); }
+      .hero-sub { font-size: 0.75rem; }
+
+      /* Stats */
+      #stats { padding: 4rem 0; }
+      .stats-grid { grid-template-columns: 1fr; }
+      .stat-item + .stat-item {
+        border-left: none;
+        border-top: var(--border);
+      }
+      .stat-item { padding: 1.4rem 1rem; }
+
+      /* Sobre */
+      #sobre { padding: 5rem 0; }
+      .sobre-img-wrap {
+        max-width: 100%;
+        margin-inline: auto;
+      }
+      .sobre-img-deco { display: none; }
+      .sobre-diferenciais { gap: 0.6rem; }
+      .dif-label { font-size: 0.58rem; }
+
+      /* Procedimentos */
+      #procedimentos { padding: 5rem 0; }
+      .proc-header { margin-bottom: 3rem; }
+      .card { padding: 1.6rem 1.4rem; }
+
+      /* Resultados */
+      #resultados { padding: 3rem 0 5rem; }
+
+      /* Depoimentos */
+      #depoimentos { padding: 5rem 0; }
+      .dep-card { padding: 1.8rem 1.4rem; }
+
+      /* FAQ */
+      #faq { padding: 3rem 0 5rem; }
+      .faq-q { font-size: 1rem; }
+
+      /* CTA Final */
+      #cta-final { padding: 5rem 0; }
+      .cta-headline { font-size: clamp(1.9rem, 8vw, 2.6rem); }
+
+      /* Footer */
+      footer { padding: 3.5rem 0 2rem; }
+
+      /* Seção transitions — altura menor em mobile */
+      #sobre::after,
+      #procedimentos::after,
+      #resultados::after,
+      #depoimentos::after,
+      #faq::after { height: 60px; }
+    }
   </style>
 </head>
 
