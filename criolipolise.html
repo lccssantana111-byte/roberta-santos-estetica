@@ -275,46 +275,46 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      gap: 5px;
-      width: 48px;
-      height: 48px;
+      gap: 4px;
       background: none;
       border: none;
-      padding: 0;
+      padding: 10px;
       flex-shrink: 0;
       position: relative;
-      z-index: 201
+      z-index: 201;
+      cursor: pointer;
     }
 
-    @media(min-width:768px) {
+    @media (min-width: 768px) {
       .nav-burger {
-        display: none
+        display: none;
       }
     }
 
     .nav-burger span {
       display: block;
-      width: 22px;
+      width: 20px;
       height: 1px;
       background: var(--color-text);
       transition: transform var(--ease), opacity var(--ease), background var(--ease);
-      transform-origin: center
+      transform-origin: center;
     }
 
     .nav-burger.is-open span:nth-child(1) {
-      transform: translateY(6px) rotate(45deg);
-      background: var(--color-text)
+      transform: translateY(5px) rotate(45deg);
+      background: var(--color-text);
     }
 
     .nav-burger.is-open span:nth-child(2) {
-      opacity: 0
+      opacity: 0;
     }
 
     .nav-burger.is-open span:nth-child(3) {
-      transform: translateY(-6px) rotate(-45deg);
-      background: var(--color-text)
+      transform: translateY(-5px) rotate(-45deg);
+      background: var(--color-text);
     }
 
+    /* Mobile overlay */
     .nav-overlay {
       position: fixed;
       inset: 0;
@@ -324,32 +324,40 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 2.5rem;
+      gap: 0;
       opacity: 0;
       pointer-events: none;
-      transition: opacity var(--ease)
+      transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .nav-overlay.is-open {
       opacity: 1;
-      pointer-events: all
+      pointer-events: all;
     }
 
-    .nav-overlay a {
+    .nav-overlay-link {
       font-family: var(--font-serif);
-      font-size: 2.2rem;
-      font-weight: 400;
+      font-size: 1.6rem;
+      font-weight: 300;
       color: var(--color-text);
-      letter-spacing: .04em;
-      transition: color var(--ease)
+      letter-spacing: 0.06em;
+      padding: 0.9rem 0;
+      border-bottom: 1px solid var(--color-secondary);
+      width: 200px;
+      text-align: center;
+      transition: color var(--ease);
     }
 
-    .nav-overlay a:hover {
-      color: var(--color-primary)
+    .nav-overlay-link:first-child {
+      border-top: 1px solid var(--color-secondary);
+    }
+
+    .nav-overlay-link:hover {
+      color: var(--color-primary);
     }
 
     .nav-overlay .btn {
-      margin-top: .5rem
+      margin-top: 2rem;
     }
 
     /* ─────────────────────────────────────────────
@@ -1156,9 +1164,9 @@
   </nav>
 
   <div class="nav-overlay" id="nav-overlay" role="dialog" aria-modal="true" aria-label="Menu de navegação">
-    <a href="index.html#procedimentos">Procedimentos</a>
-    <a href="index.html#resultados">Resultados</a>
-    <a href="index.html#sobre">Sobre</a>
+    <a href="index.html#procedimentos" class="nav-overlay-link">Procedimentos</a>
+    <a href="index.html#resultados" class="nav-overlay-link">Resultados</a>
+    <a href="index.html#sobre" class="nav-overlay-link">Sobre</a>
     <a href="https://wa.me/5511998694641?text=Olá%2C%20gostaria%20de%20agendar%20uma%20avaliação%20de%20Criolipólise%20na%20Roberta%20Santos%20Estética%20Avançada." target="_blank" rel="noopener noreferrer" class="btn btn-primary">Agendar Consulta</a>
   </div>
 
