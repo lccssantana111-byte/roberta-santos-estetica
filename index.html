@@ -882,26 +882,18 @@
       padding: 0.5rem 0 2rem;
       -webkit-mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
       mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
+      cursor: grab;
+      user-select: none;
+    }
+
+    .res-track-wrap:active {
+      cursor: grabbing;
     }
 
     .res-track {
       display: flex;
       gap: 1.5rem;
       width: max-content;
-      animation: res-marquee 55s linear infinite;
-    }
-
-    .res-track:hover {
-      animation-play-state: paused;
-    }
-
-    @keyframes res-marquee {
-      from { transform: translateX(0); }
-      to   { transform: translateX(-50%); }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .res-track { animation: none; }
     }
 
     /* ── Card ── */
@@ -1418,6 +1410,7 @@
 
     /* Shared gradient mixin — applied per-section below */
     #sobre::after,
+    #clinica::after,
     #procedimentos::after,
     #resultados::after,
     #depoimentos::after,
@@ -1432,10 +1425,10 @@
       z-index: 1;
     }
 
-    /* ── Sobre → Procedimentos (background → surface) */
+    /* ── Sobre → Clínica (background → dark) */
     #sobre::after {
       height: 110px;
-      background: linear-gradient(to bottom, transparent, var(--color-surface));
+      background: linear-gradient(to bottom, transparent, var(--color-text));
     }
 
     /* ── Procedimentos → Resultados (surface → background) */
@@ -1482,6 +1475,189 @@
     }
 
     /* ─────────────────────────────────────────────
+       CLÍNICA — vídeo + mosaico de fotos
+    ───────────────────────────────────────────── */
+    #clinica {
+      background: var(--color-text);
+      padding: 7rem 0 6rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #clinica::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 110px;
+      background: linear-gradient(to bottom, transparent, var(--color-surface));
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .clinica-eyebrow {
+      color: var(--color-primary);
+    }
+
+    .clinica-header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+
+    .clinica-title {
+      font-family: var(--font-serif);
+      font-size: clamp(2.2rem, 4vw, 3.8rem);
+      font-weight: 300;
+      color: var(--color-white);
+      line-height: 1.1;
+      margin-top: 0.8rem;
+    }
+
+    .clinica-gold-rule {
+      width: 40px;
+      height: 1px;
+      background: var(--color-primary);
+      margin: 1.5rem auto 0;
+    }
+
+    .clinica-video-wrap {
+      max-width: 860px;
+      margin: 0 auto 2.5rem;
+      padding: 0 var(--container-pad);
+    }
+
+    .clinica-video-frame {
+      position: relative;
+      aspect-ratio: 16/9;
+      overflow: hidden;
+      border: 1px solid rgba(201, 169, 110, 0.2);
+      cursor: pointer;
+    }
+
+    .clinica-video-poster {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .clinica-video-frame:hover .clinica-video-poster {
+      transform: scale(1.04);
+    }
+
+    .clinica-video-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(26, 22, 18, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.4s ease;
+    }
+
+    .clinica-video-frame:hover .clinica-video-overlay {
+      background: rgba(26, 22, 18, 0.22);
+    }
+
+    .clinica-play-btn {
+      width: 84px;
+      height: 84px;
+      border: 1px solid rgba(201, 169, 110, 0.55);
+      border-radius: 50%;
+      background: rgba(201, 169, 110, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-primary);
+      transition: all 0.4s ease;
+      cursor: pointer;
+      backdrop-filter: blur(6px);
+    }
+
+    .clinica-video-frame:hover .clinica-play-btn {
+      background: var(--color-primary);
+      border-color: var(--color-primary);
+      color: var(--color-text);
+      transform: scale(1.1);
+    }
+
+    .clinica-video-label {
+      position: absolute;
+      bottom: 1.4rem;
+      left: 1.8rem;
+      font-family: var(--font-sans);
+      font-size: 0.6rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.55);
+      pointer-events: none;
+    }
+
+    .clinica-fotos {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.55rem;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 var(--container-pad);
+      position: relative;
+      z-index: 2;
+    }
+
+    @media (min-width: 768px) {
+      .clinica-fotos {
+        grid-template-columns: 1.65fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+      }
+
+      .clinica-foto:first-child {
+        grid-row: 1 / 3;
+      }
+    }
+
+    .clinica-foto {
+      overflow: hidden;
+    }
+
+    .clinica-foto img {
+      width: 100%;
+      height: 100%;
+      min-height: 140px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.9s cubic-bezier(0.4, 0, 0.2, 1), filter 0.5s ease;
+      filter: brightness(0.82);
+    }
+
+    @media (min-width: 768px) {
+      .clinica-foto:first-child img {
+        min-height: 320px;
+      }
+
+      .clinica-foto:not(:first-child) img {
+        min-height: 152px;
+      }
+    }
+
+    .clinica-foto:hover img {
+      transform: scale(1.07);
+      filter: brightness(1);
+    }
+
+    .clinica-video-iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+      z-index: 5;
+    }
+
+    /* ─────────────────────────────────────────────
        MOBILE — ajustes 375px–767px
     ───────────────────────────────────────────── */
     @media (max-width: 767px) {
@@ -1515,6 +1691,11 @@
       .sobre-img-deco { display: none; }
       .sobre-diferenciais { gap: 0.6rem; }
       .dif-label { font-size: 0.58rem; }
+
+      /* Clínica */
+      #clinica { padding: 5rem 0 4rem; }
+      .clinica-fotos { grid-template-columns: 1fr 1fr; }
+      .clinica-play-btn { width: 68px; height: 68px; }
 
       /* Procedimentos */
       #procedimentos { padding: 5rem 0; }
@@ -1696,6 +1877,74 @@
 
       </div>
     </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════
+     CLÍNICA
+══════════════════════════════════════════════ -->
+  <section id="clinica" aria-label="Nossa clínica">
+
+    <div class="container">
+      <div class="clinica-header fade-in">
+        <p class="eyebrow clinica-eyebrow">Nossa Clínica</p>
+        <h2 class="clinica-title">Um espaço criado<br>para a sua transformação.</h2>
+        <div class="clinica-gold-rule"></div>
+      </div>
+    </div>
+
+    <!-- Vídeo principal -->
+    <div class="clinica-video-wrap fade-in">
+      <div class="clinica-video-frame" id="clinica-video-trigger" role="button" tabindex="0" aria-label="Assistir ao vídeo da clínica">
+        <img
+          src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=1400&q=80"
+          alt="Ambiente sofisticado da Clínica Roberta Santos"
+          class="clinica-video-poster"
+          loading="lazy"
+        >
+        <div class="clinica-video-overlay" aria-hidden="true">
+          <button class="clinica-play-btn" tabindex="-1">
+            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <polygon points="5 3 19 12 5 21 5 3"/>
+            </svg>
+          </button>
+        </div>
+        <span class="clinica-video-label">Tour pela Clínica</span>
+      </div>
+    </div>
+
+    <!-- Mosaico de fotos -->
+    <div class="clinica-fotos fade-in">
+      <div class="clinica-foto">
+        <img
+          src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=700&q=80"
+          alt="Sala de tratamento — Roberta Santos Estética Avançada"
+          loading="lazy"
+        >
+      </div>
+      <div class="clinica-foto">
+        <img
+          src="https://images.unsplash.com/photo-1560750588-73207b1ef5b8?w=600&q=80"
+          alt="Espaço de atendimento exclusivo"
+          loading="lazy"
+        >
+      </div>
+      <div class="clinica-foto">
+        <img
+          src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=600&q=80"
+          alt="Tecnologia e cuidado em cada detalhe"
+          loading="lazy"
+        >
+      </div>
+      <div class="clinica-foto">
+        <img
+          src="https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?w=600&q=80"
+          alt="Produtos e equipamentos de alta performance"
+          loading="lazy"
+        >
+      </div>
+    </div>
+
   </section>
 
 
@@ -2465,6 +2714,128 @@
 
       if (statsSection) statsObserver.observe(statsSection);
     }
+
+    /* ── Vídeo inline da clínica ── */
+    (function () {
+      const frame = document.getElementById('clinica-video-trigger');
+      if (!frame) return;
+      /* Substitua pelo ID real do vídeo no YouTube */
+      const VIDEO_ID = 'CLINICA_VIDEO_ID';
+
+      function play() {
+        const iframe = document.createElement('iframe');
+        iframe.src = 'https://www.youtube.com/embed/' + VIDEO_ID + '?autoplay=1&rel=0&modestbranding=1';
+        iframe.title = 'Vídeo da Clínica Roberta Santos';
+        iframe.allow = 'autoplay; fullscreen; picture-in-picture';
+        iframe.allowFullscreen = true;
+        iframe.className = 'clinica-video-iframe';
+        const poster = frame.querySelector('.clinica-video-poster');
+        const overlay = frame.querySelector('.clinica-video-overlay');
+        const label = frame.querySelector('.clinica-video-label');
+        if (poster) poster.style.visibility = 'hidden';
+        if (overlay) { overlay.style.opacity = '0'; overlay.style.pointerEvents = 'none'; }
+        if (label) label.style.opacity = '0';
+        frame.appendChild(iframe);
+        frame.style.cursor = 'default';
+        frame.removeEventListener('click', play);
+        frame.removeEventListener('keydown', onKey);
+        frame.removeAttribute('role');
+        frame.removeAttribute('tabindex');
+        frame.removeAttribute('aria-label');
+      }
+
+      function onKey(e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); play(); }
+      }
+
+      frame.addEventListener('click', play);
+      frame.addEventListener('keydown', onKey);
+    })();
+
+    /* ── Carrossel de resultados — arrastar e auto-scroll ── */
+    (function () {
+      const wrap = document.querySelector('.res-track-wrap');
+      const track = document.querySelector('.res-track');
+      if (!wrap || !track) return;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+      const SPEED = 0.55;
+      let rawOffset = 0;
+      let hovered = false;
+      let dragging = false;
+      let dragStartX = 0;
+      let dragStartOffset = 0;
+      let velocity = 0;
+      let lastX = 0;
+      let lastT = 0;
+      let lastTick = performance.now();
+
+      function half() { return track.scrollWidth / 2; }
+
+      function visualOffset(raw) {
+        const h = half();
+        if (!h) return raw;
+        let v = raw % h;
+        if (v > 0) v -= h;
+        return v;
+      }
+
+      function render() {
+        track.style.transform = 'translateX(' + visualOffset(rawOffset) + 'px)';
+      }
+
+      function tick(now) {
+        const dt = Math.min(now - lastTick, 50);
+        lastTick = now;
+        if (!dragging && !hovered) rawOffset -= SPEED * (dt / 16.67);
+        if (!dragging && Math.abs(velocity) > 0.05) {
+          rawOffset += velocity * (dt / 16.67);
+          velocity *= 0.90;
+        }
+        render();
+        requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+
+      wrap.addEventListener('mouseenter', () => { hovered = true; velocity = 0; });
+      wrap.addEventListener('mouseleave', () => { hovered = false; });
+
+      wrap.addEventListener('mousedown', function (e) {
+        dragging = true; hovered = false;
+        dragStartX = e.clientX; dragStartOffset = rawOffset;
+        velocity = 0; lastX = e.clientX; lastT = performance.now();
+        e.preventDefault();
+      });
+      document.addEventListener('mousemove', function (e) {
+        if (!dragging) return;
+        rawOffset = dragStartOffset + (e.clientX - dragStartX);
+        const now = performance.now();
+        if (now > lastT) velocity = ((e.clientX - lastX) / (now - lastT)) * 16;
+        lastX = e.clientX; lastT = now;
+      });
+      document.addEventListener('mouseup', function () {
+        if (!dragging) return;
+        dragging = false;
+        velocity = Math.max(-30, Math.min(30, velocity));
+      });
+
+      wrap.addEventListener('touchstart', function (e) {
+        dragging = true;
+        dragStartX = e.touches[0].clientX; dragStartOffset = rawOffset;
+        velocity = 0; lastX = e.touches[0].clientX; lastT = performance.now();
+      }, { passive: true });
+      wrap.addEventListener('touchmove', function (e) {
+        if (!dragging) return;
+        rawOffset = dragStartOffset + (e.touches[0].clientX - dragStartX);
+        const now = performance.now();
+        if (now > lastT) velocity = ((e.touches[0].clientX - lastX) / (now - lastT)) * 16;
+        lastX = e.touches[0].clientX; lastT = now;
+      }, { passive: true });
+      wrap.addEventListener('touchend', function () {
+        dragging = false;
+        velocity = Math.max(-30, Math.min(30, velocity));
+      }, { passive: true });
+    })();
 
     /* ── FAQ accordion ── */
     document.querySelectorAll('.faq-btn').forEach(btn => {

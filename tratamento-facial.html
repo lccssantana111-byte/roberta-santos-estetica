@@ -181,7 +181,7 @@
       inset-inline: 0;
       z-index: 200;
       padding: 1.6rem 0;
-      transition: background var(--ease), padding var(--ease), border-color var(--ease);
+      transition: background var(--ease), backdrop-filter var(--ease), padding var(--ease), border-color var(--ease);
       border-bottom: 1px solid transparent
     }
 
@@ -192,6 +192,20 @@
       padding: 1.1rem 0;
       border-bottom-color: var(--color-secondary)
     }
+
+    .nav:not(.is-scrolled) .nav-logo-name { color: var(--color-white) }
+    .nav:not(.is-scrolled) .nav-logo-sub { color: rgba(255,255,255,.65) }
+    .nav:not(.is-scrolled) .nav-links a { color: rgba(255,255,255,.8) }
+    .nav:not(.is-scrolled) .nav-cta {
+      border-color: rgba(255,255,255,.55);
+      color: var(--color-white)
+    }
+    .nav:not(.is-scrolled) .nav-cta:hover {
+      background: var(--color-white);
+      color: var(--color-text);
+      border-color: var(--color-white)
+    }
+    .nav:not(.is-scrolled) .nav-burger span { background: var(--color-white) }
 
     .nav-inner {
       display: flex;
@@ -213,7 +227,8 @@
       font-size: 2rem;
       letter-spacing: .08em;
       color: var(--color-text);
-      line-height: 1
+      line-height: 1;
+      transition: color var(--ease)
     }
 
     .nav-logo-sub {
@@ -222,7 +237,8 @@
       font-size: .58rem;
       letter-spacing: .2em;
       text-transform: uppercase;
-      color: var(--color-text-muted)
+      color: var(--color-text-muted);
+      transition: color var(--ease)
     }
 
     .nav-links {
@@ -287,12 +303,13 @@
       width: 22px;
       height: 1px;
       background: var(--color-text);
-      transition: transform var(--ease), opacity var(--ease);
+      transition: transform var(--ease), opacity var(--ease), background var(--ease);
       transform-origin: center
     }
 
     .nav-burger.is-open span:nth-child(1) {
-      transform: translateY(6px) rotate(45deg)
+      transform: translateY(6px) rotate(45deg);
+      background: var(--color-text)
     }
 
     .nav-burger.is-open span:nth-child(2) {
@@ -300,7 +317,8 @@
     }
 
     .nav-burger.is-open span:nth-child(3) {
-      transform: translateY(-6px) rotate(-45deg)
+      transform: translateY(-6px) rotate(-45deg);
+      background: var(--color-text)
     }
 
     .nav-overlay {
@@ -991,6 +1009,127 @@
       .cta-headline { font-size: clamp(1.9rem, 8vw, 2.6rem); }
       footer { padding: 3.5rem 0 2rem; }
     }
+
+    /* ─────────────────────────────────────────────
+       ANTES & DEPOIS — slider comparativo
+    ───────────────────────────────────────────── */
+    #antes-depois {
+      padding: 5rem 0 3rem;
+      background: var(--color-surface);
+      position: relative;
+    }
+
+    .ad-header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+
+    .ad-container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 0 var(--container-pad);
+    }
+
+    .comparison {
+      position: relative;
+      aspect-ratio: 4/3;
+      overflow: hidden;
+      cursor: ew-resize;
+      user-select: none;
+      touch-action: pan-y;
+      border: 1px solid var(--color-secondary);
+      --split: 50%;
+    }
+
+    .comp-before,
+    .comp-after {
+      position: absolute;
+      inset: 0;
+    }
+
+    .comp-before img,
+    .comp-after img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      pointer-events: none;
+    }
+
+    .comp-after {
+      clip-path: inset(0 0 0 var(--split));
+    }
+
+    .comp-handle {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: var(--split);
+      width: 2px;
+      background: var(--color-primary);
+      transform: translateX(-50%);
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    .comp-knob {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 48px;
+      height: 48px;
+      transform: translate(-50%, -50%);
+      background: var(--color-primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-text);
+      box-shadow: 0 2px 14px rgba(201, 169, 110, 0.45);
+    }
+
+    .comp-label {
+      position: absolute;
+      bottom: 1.2rem;
+      font-family: var(--font-sans);
+      font-size: 0.58rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 0.35rem 0.8rem;
+      background: rgba(26, 22, 18, 0.6);
+      color: var(--color-white);
+      backdrop-filter: blur(4px);
+      z-index: 5;
+    }
+
+    .comp-label--antes {
+      left: 1.2rem;
+    }
+
+    .comp-label--depois {
+      right: 1.2rem;
+      z-index: 15;
+    }
+
+    .ad-note {
+      text-align: center;
+      margin-top: 1.5rem;
+      font-size: 0.72rem;
+      color: var(--color-text-muted);
+      font-weight: 300;
+      letter-spacing: 0.06em;
+    }
+
+    .ad-cta {
+      text-align: center;
+      margin-top: 2.5rem;
+    }
+
+    @media (max-width: 767px) {
+      #antes-depois { padding: 5rem 0; }
+      .comparison { aspect-ratio: 1; }
+    }
   </style>
 </head>
 
@@ -1190,6 +1329,39 @@
   </section>
 
 
+
+  <!-- ANTES & DEPOIS -->
+  <section id="antes-depois" aria-label="Antes e Depois">
+    <div class="container">
+      <div class="ad-header fade-in">
+        <p class="eyebrow">Transformação</p>
+        <h2 class="section-heading">Antes &amp; Depois</h2>
+        <div class="gold-rule"></div>
+      </div>
+    </div>
+    <div class="ad-container fade-in">
+      <div class="comparison" role="img" aria-label="Comparativo antes e depois do tratamento. Arraste para comparar.">
+        <div class="comp-before">
+          <img src="https://images.unsplash.com/photo-1616683693504-3ea7e9ad6fec?w=800&q=80" alt="Pele antes do tratamento facial" loading="lazy">
+          <span class="comp-label comp-label--antes">Antes</span>
+        </div>
+        <div class="comp-after">
+          <img src="https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=800&q=80" alt="Pele após tratamento facial — radiante e uniforme" loading="lazy">
+          <span class="comp-label comp-label--depois">Depois</span>
+        </div>
+        <div class="comp-handle" aria-hidden="true">
+          <div class="comp-knob"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 3 12 9 6"/><polyline points="15 18 21 12 15 6"/></svg></div>
+        </div>
+      </div>
+      <p class="ad-note">Resultados individuais podem variar.</p>
+      <div class="ad-cta">
+        <a href="https://wa.me/5511998694641?text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20uma%20avalia%C3%A7%C3%A3o%20de%20Tratamento%20Facial%20na%20Roberta%20Santos%20Est%C3%A9tica%20Avan%C3%A7ada." target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+          Quero meu resultado
+        </a>
+      </div>
+    </div>
+  </section>
+
   <!-- INDICAÇÕES -->
   <section id="indicacoes" aria-label="Indicações do Tratamento Facial">
     <div class="container">
@@ -1335,7 +1507,7 @@
           </ul>
         </div>
       </div>
-      <p class="footer-bottom">© 2025 Roberta Santos Estética Avançada. Todos os direitos reservados.</p>
+      <p class="footer-bottom">© 2026 Roberta Santos Estética Avançada. Todos os direitos reservados.</p>
     </div>
   </footer>
 
@@ -1392,6 +1564,22 @@
         document.querySelectorAll('.faq-item.is-open').forEach(o => { o.classList.remove('is-open'); o.querySelector('.faq-btn').setAttribute('aria-expanded', 'false'); });
         if (!isOpen) { item.classList.add('is-open'); btn.setAttribute('aria-expanded', 'true'); }
       });
+    });
+
+    /* ── Comparison slider ── */
+    document.querySelectorAll('.comparison').forEach(function(wrap) {
+      var dragging = false;
+      function setPos(clientX) {
+        var rect = wrap.getBoundingClientRect();
+        var pct = Math.max(5, Math.min(95, ((clientX - rect.left) / rect.width) * 100));
+        wrap.style.setProperty('--split', pct + '%');
+      }
+      wrap.addEventListener('mousedown', function(e) { dragging = true; setPos(e.clientX); });
+      wrap.addEventListener('touchstart', function(e) { dragging = true; setPos(e.touches[0].clientX); }, { passive: true });
+      document.addEventListener('mousemove', function(e) { if (dragging) setPos(e.clientX); });
+      document.addEventListener('touchmove', function(e) { if (dragging) setPos(e.touches[0].clientX); }, { passive: true });
+      document.addEventListener('mouseup', function() { dragging = false; });
+      document.addEventListener('touchend', function() { dragging = false; });
     });
   </script>
 </body>
